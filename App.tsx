@@ -1,13 +1,11 @@
-import { StatusBar } from 'expo-status-bar'
 import { Provider } from 'react-redux'
-import { store } from './src/store'
+import { store } from '@store/root'
 import { NavigationContainer } from '@react-navigation/native'
-import Home from './src/screens/Home'
-import Preview from './src/screens/Preview'
-
+import Home from '@screens/Home'
+import Preview from '@screens/Preview'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { StyleSheet } from 'react-native'
-import { colors } from './src/styles'
+import { StatusBar } from 'expo-status-bar'
+import { colors } from '@styles/theme'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -49,9 +47,3 @@ export default function App() {
     </Provider>
   )
 }
-
-const styles = StyleSheet.create({
-  navigator: {
-    width: '50%',
-  },
-})

@@ -1,10 +1,5 @@
-import { Text } from 'react-native'
-import Layout from '../components/Layout'
+import { Text, TextInput, TouchableOpacity } from 'react-native'
 
 export default function Preview() {
-  return (
-    <Layout>
-      <Text>This is Preview Page</Text>
-    </Layout>
-  )
+  return <Text>Preview Screen</Text>
 }
