@@ -1,20 +1,29 @@
-import { Text, TextInput } from '@react-native-material/core'
 import { PropsWithChildren, useEffect, useState } from 'react'
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { colors } from '@styles/theme'
+import { useSelector } from 'react-redux'
+import { RootState } from '@store/root'
+import { useDispatch } from 'react-redux'
+import { cardActions } from '@store/slice/cardSlice'
 
-export default function CardWrapper({ children }: PropsWithChildren) {
-  const [mode, setMode] = useState<'read' | 'edit'>('read')
+interface Props {
+  id: string
+  type?: 'title'
+}
+
+export default function CardWrapper({ children, id, type }: PropsWithChildren<Props>) {
+  const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard)
+  const dispatch = useDispatch()
 
   const handlePress = () => {
-    setMode('edit')
+    dispatch(cardActions.updateActiveCard({ id }))
   }
 
   return (
     <>
       <TouchableOpacity style={styles.container} activeOpacity={1} onPress={handlePress}>
-        <View style={styles.topHighlighting} />
-        <View style={styles.leftHighlighting} />
+        {type === 'title' && <View style={styles.topHighlighting} />}
+        {id === activeCard && <View style={styles.leftHighlighting} />}
         {children}
       </TouchableOpacity>
     </>

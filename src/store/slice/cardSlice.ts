@@ -36,6 +36,10 @@ const initialState: CardsState = {
 export interface BasePayload {
   id: string
 }
+export interface PayloadWithTitleCard extends BasePayload {
+  title: string
+  description?: string
+}
 
 const slice = createSlice({
   name: '@card',
@@ -52,7 +56,12 @@ const slice = createSlice({
         options: ['옵션1'],
       })
     },
-    editCard: (state, action) => {},
+    editTitleCard: (state, action: PayloadAction<PayloadWithTitleCard>) => {
+      const { id, title, description } = action.payload
+      const card = state.data.find((card) => card.id === id) as TitleCardType
+      card.title = title
+      card.description = description
+    },
   },
 })
 
