@@ -27,7 +27,7 @@ export default function CardTypeSelector({ id }: Props) {
 
         const typeKey = options[i as number]
         const type = typeMap[typeKey]
-        dispatch(cardActions.changeCardType({ id, type }))
+        dispatch(cardActions.updateCardType({ id, type }))
       }
     )
   }

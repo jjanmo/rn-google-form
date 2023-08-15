@@ -3,6 +3,8 @@ import * as Crypto from 'expo-crypto'
 import {
   BasePayload,
   CardsState,
+  PayloadWithOption,
+  PayloadWithSurveyCard,
   PayloadWithTitleCard,
   PayloadWithTypeKey,
   SurveyCardType,
@@ -10,16 +12,15 @@ import {
 } from './cardSlice.type'
 
 const initialId = Crypto.randomUUID()
-
 const initialState: CardsState = {
   activeCard: initialId,
-  data: [
-    {
+  data: {
+    [initialId]: {
       id: initialId,
       type: 'title',
       title: '제목 없는 설문지',
     },
-  ],
+  },
 }
 
 const slice = createSlice({
@@ -30,23 +31,34 @@ const slice = createSlice({
       state.activeCard = action.payload.id
     },
     addCard: (state) => {
-      state.data.push({
-        id: Crypto.randomUUID(),
+      const id = Crypto.randomUUID()
+      state.data[id] = {
+        id,
         type: 'radio',
         question: '',
         options: ['옵션1'],
-      })
+      }
     },
-    editTitleCard: (state, action: PayloadAction<PayloadWithTitleCard>) => {
+    editTitleCardText: (state, action: PayloadAction<PayloadWithTitleCard>) => {
       const { id, title, description } = action.payload
-      const card = state.data.find((card) => card.id === id) as TitleCardType
-      card.title = title
-      card.description = description
+      const titleCard = state.data[id] as TitleCardType
+      titleCard.title = title || '제목 없는 설문지'
+      titleCard.description = description
     },
-    changeCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
+    editSurveyCardText: (state, action: PayloadAction<PayloadWithSurveyCard>) => {
+      const { id, question } = action.payload
+      const surveyCard = state.data[id] as SurveyCardType
+      surveyCard.question = question
+    },
+    editSurveyCardOption: (state, action: PayloadAction<PayloadWithOption>) => {
+      const { id, option, index } = action.payload
+      const surveyCard = state.data[id] as SurveyCardType
+      surveyCard.options[index] = option
+    },
+    updateCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
       const { id, type } = action.payload
-      const card = state.data.find((card) => card.id === id) as SurveyCardType
-      card.type = type
+      const surveyCard = state.data[id] as SurveyCardType
+      surveyCard.type = type
     },
   },
 })
