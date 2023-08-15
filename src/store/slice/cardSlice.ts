@@ -35,6 +35,7 @@ const slice = createSlice({
       state.data[id] = {
         id,
         type: 'radio',
+        required: false,
         question: '질문',
         options: [
           {

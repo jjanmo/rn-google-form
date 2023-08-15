@@ -13,6 +13,7 @@ export type Option = {
   text: string
 }
 export interface SurveyCardType extends BaseCard {
+  required: boolean
   type: SurveyCardTypeKey
   question: string
   options: Option[]
