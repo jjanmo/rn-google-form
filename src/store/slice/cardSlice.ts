@@ -39,6 +39,11 @@ const slice = createSlice({
         options: ['옵션1'],
       }
     },
+    updateCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
+      const { id, type } = action.payload
+      const surveyCard = state.data[id] as SurveyCardType
+      surveyCard.type = type
+    },
     editTitleCardText: (state, action: PayloadAction<PayloadWithTitleCard>) => {
       const { id, title, description } = action.payload
       const titleCard = state.data[id] as TitleCardType
@@ -55,10 +60,15 @@ const slice = createSlice({
       const surveyCard = state.data[id] as SurveyCardType
       surveyCard.options[index] = option
     },
-    updateCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
-      const { id, type } = action.payload
-      const surveyCard = state.data[id] as SurveyCardType
-      surveyCard.type = type
+    addOption: (state, action: PayloadAction<BasePayload>) => {
+      const { id } = action.payload
+      const options = (state.data[id] as SurveyCardType).options
+      options.push(`옵션 ${options.length + 1}`)
+    },
+    deleteOption: (state, action: PayloadAction<PayloadWithOption>) => {
+      const { id, index } = action.payload
+      const options = (state.data[id] as SurveyCardType).options
+      options.splice(index, 1)
     },
   },
 })
