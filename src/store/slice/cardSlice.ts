@@ -3,23 +3,23 @@ import * as Crypto from 'expo-crypto'
 
 const initialId = Crypto.randomUUID()
 
-export type CardType = 'title' | 'short' | 'long' | 'checkbox' | 'radio'
 export interface BaseCard {
   id: string
-  type: CardType
 }
-export interface TitleCard extends BaseCard {
+export interface TitleCardType extends BaseCard {
+  type: 'title'
   title: string
   description?: string
 }
-export interface SurveyCard extends BaseCard {
+export interface SurveyCardType extends BaseCard {
+  type: 'short' | 'long' | 'radio' | 'checkbox'
   question: string
   options?: string[]
 }
-export type EnhancedCard = TitleCard | SurveyCard
+export type CardType = TitleCardType | SurveyCardType
 export interface CardsState {
   activeCard: string
-  data: EnhancedCard[]
+  data: CardType[]
 }
 
 const initialState: CardsState = {
