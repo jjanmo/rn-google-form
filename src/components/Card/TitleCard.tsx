@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { TextInput, Text } from '@react-native-material/core'
 import { StyleSheet, View } from 'react-native'
-import CardWrapper from './CardWrapper'
-import { TitleCardType, cardActions } from '@store/slice/cardSlice'
-import { shallowEqual, useSelector } from 'react-redux'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux'
+import { TextInput, Text } from '@react-native-material/core'
 import { RootState } from '@store/root'
-import { useDispatch } from 'react-redux'
+import { TitleCardType } from '@store/slice/cardSlice.type'
+import { cardActions } from '@store/slice/cardSlice'
+import CardWrapper from './CardWrapper'
+import { colors } from '@styles/theme'
 
 export default function TitleCard(props: TitleCardType) {
   const { id, title, description, type } = props
@@ -43,6 +44,7 @@ export default function TitleCard(props: TitleCardType) {
             variant="standard"
             inputStyle={styles.titleInput}
             selectionColor="grey"
+            color={colors.purpleDark}
           />
           <TextInput
             value={descriptionText}
@@ -51,6 +53,7 @@ export default function TitleCard(props: TitleCardType) {
             variant="standard"
             inputStyle={styles.descriptionInput}
             selectionColor="grey"
+            color={colors.purpleDark}
           />
         </View>
       )}
