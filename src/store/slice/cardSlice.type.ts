@@ -8,10 +8,14 @@ export interface TitleCardType extends BaseCard {
   description?: string
 }
 export type SurveyCardTypeKey = 'short' | 'long' | 'radio' | 'checkbox'
+export type Option = {
+  id: string
+  text: string
+}
 export interface SurveyCardType extends BaseCard {
   type: SurveyCardTypeKey
   question: string
-  options: string[]
+  options: Option[]
 }
 export type CardType = TitleCardType | SurveyCardType
 export interface CardsState {

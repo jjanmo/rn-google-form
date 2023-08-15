@@ -35,9 +35,15 @@ const slice = createSlice({
       state.data[id] = {
         id,
         type: 'radio',
-        question: '',
-        options: ['옵션1'],
+        question: '질문',
+        options: [
+          {
+            id: Crypto.randomUUID(),
+            text: '옵션 1',
+          },
+        ],
       }
+      state.activeCard = id
     },
     updateCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
       const { id, type } = action.payload
@@ -47,7 +53,7 @@ const slice = createSlice({
     editTitleCardText: (state, action: PayloadAction<PayloadWithTitleCard>) => {
       const { id, title, description } = action.payload
       const titleCard = state.data[id] as TitleCardType
-      titleCard.title = title || '제목 없는 설문지'
+      titleCard.title = title
       titleCard.description = description
     },
     editSurveyCardText: (state, action: PayloadAction<PayloadWithSurveyCard>) => {
@@ -58,12 +64,15 @@ const slice = createSlice({
     editSurveyCardOption: (state, action: PayloadAction<PayloadWithOption>) => {
       const { id, option, index } = action.payload
       const surveyCard = state.data[id] as SurveyCardType
-      surveyCard.options[index] = option
+      surveyCard.options[index].text = option
     },
     addOption: (state, action: PayloadAction<BasePayload>) => {
       const { id } = action.payload
       const options = (state.data[id] as SurveyCardType).options
-      options.push(`옵션 ${options.length + 1}`)
+      options.push({
+        id: Crypto.randomUUID(),
+        text: `옵션 ${options.length + 1}`,
+      })
     },
     deleteOption: (state, action: PayloadAction<PayloadWithOption>) => {
       const { id, index } = action.payload
