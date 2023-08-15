@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { PropsWithChildren } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { colors } from '@styles/theme'
 import { useSelector } from 'react-redux'
@@ -20,13 +20,11 @@ export default function CardWrapper({ children, id, type }: PropsWithChildren<Pr
   }
 
   return (
-    <>
-      <TouchableOpacity style={styles.container} activeOpacity={1} onPress={handlePress}>
-        {type === 'title' && <View style={styles.topHighlighting} />}
-        {id === activeCard && <View style={styles.leftHighlighting} />}
-        {children}
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity style={styles.container} activeOpacity={1} onPress={handlePress}>
+      {type === 'title' && <View style={styles.topHighlighting} />}
+      {id === activeCard && <View style={styles.leftHighlighting} />}
+      {children}
+    </TouchableOpacity>
   )
 }
 
@@ -34,6 +32,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     width: '95%',
+    marginBottom: 10,
     backgroundColor: colors.white,
     borderColor: colors.grey,
     borderWidth: 1,

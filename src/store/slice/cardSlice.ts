@@ -1,26 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import * as Crypto from 'expo-crypto'
+import {
+  BasePayload,
+  CardsState,
+  PayloadWithTitleCard,
+  PayloadWithTypeKey,
+  SurveyCardType,
+  TitleCardType,
+} from './cardSlice.type'
 
 const initialId = Crypto.randomUUID()
-
-export interface BaseCard {
-  id: string
-}
-export interface TitleCardType extends BaseCard {
-  type: 'title'
-  title: string
-  description?: string
-}
-export interface SurveyCardType extends BaseCard {
-  type: 'short' | 'long' | 'radio' | 'checkbox'
-  question: string
-  options?: string[]
-}
-export type CardType = TitleCardType | SurveyCardType
-export interface CardsState {
-  activeCard: string
-  data: CardType[]
-}
 
 const initialState: CardsState = {
   activeCard: initialId,
@@ -31,14 +20,6 @@ const initialState: CardsState = {
       title: '제목 없는 설문지',
     },
   ],
-}
-
-export interface BasePayload {
-  id: string
-}
-export interface PayloadWithTitleCard extends BasePayload {
-  title: string
-  description?: string
 }
 
 const slice = createSlice({
@@ -61,6 +42,11 @@ const slice = createSlice({
       const card = state.data.find((card) => card.id === id) as TitleCardType
       card.title = title
       card.description = description
+    },
+    changeCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
+      const { id, type } = action.payload
+      const card = state.data.find((card) => card.id === id) as SurveyCardType
+      card.type = type
     },
   },
 })
