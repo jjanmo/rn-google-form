@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 import { TextInput, Text } from '@react-native-material/core'
@@ -46,7 +45,7 @@ export default function TitleCard({ id, title, description, type }: TitleCardTyp
       {activeCard !== id && (
         <View style={styles.readonlyContainer}>
           <View style={styles.readOnlyTitle}>
-            <Text style={styles.titleInput}>{title}</Text>
+            <Text style={styles.titleInput}>{title || '제목 없는 설문지'}</Text>
           </View>
           <View>
             <Text style={styles.descriptionInput}>{description || '설문지 설명'}</Text>
