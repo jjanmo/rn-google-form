@@ -1,5 +1,3 @@
 export { default as TitleCard } from './TitleCard'
-export { default as ShortCard } from './ShortCard'
-export { default as LongCard } from './LongCard'
-export { default as RadioCard } from './RadioCard'
-export { default as CheckboxCard } from './CheckboxCard'
+export { default as TextCard } from './TextCard'
+export { default as SelectCard } from './SelectCard'

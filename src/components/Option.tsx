@@ -1,11 +1,10 @@
+import { useDispatch } from 'react-redux'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { TextInput } from '@react-native-material/core'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { cardActions } from '@store/slice/cardSlice'
 import { SurveyCardTypeKey } from '@store/slice/cardSlice.type'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useDispatch } from 'react-redux'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { colors } from '@styles/theme'
-import { useState } from 'react'
-import { TextInput } from '@react-native-material/core'
 
 interface Props {
   type: SurveyCardTypeKey
@@ -17,14 +16,9 @@ interface Props {
 
 export default function Option({ type, id, index, optionText, length }: Props) {
   const dispatch = useDispatch()
-  const [value, setValue] = useState(optionText)
 
   const handleChangeOption = (text: string) => {
-    setValue(text)
-  }
-  const handleBlur = () => {
-    const optionText = value || `옵션 ${index + 1}`
-    dispatch(cardActions.editSurveyCardOption({ id, index, option: optionText }))
+    dispatch(cardActions.editSurveyCardOption({ id, index, option: text }))
   }
   const handlePressDeleteOption = () => {
     dispatch(cardActions.deleteOption({ id, index, option: optionText }))
@@ -41,11 +35,11 @@ export default function Option({ type, id, index, optionText, length }: Props) {
 
         <TextInput
           style={styles.questionInput}
-          value={value}
+          value={optionText}
           onChangeText={handleChangeOption}
           selectionColor={colors.greyDark}
-          onBlur={handleBlur}
           variant="standard"
+          placeholder={`옵션 ${index + 1}`}
         />
       </View>
 
