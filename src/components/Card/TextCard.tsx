@@ -1,16 +1,14 @@
 import { Text, TextInput } from '@react-native-material/core'
 import { StyleSheet, View } from 'react-native'
-import CardWrapper from './CardWrapper'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@store/root'
-import { shallowEqual, useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
 import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { cardActions } from '@store/slice/cardSlice'
 import CardTypeSelector from '@components/CardTypeSelector'
 import { colors } from '@styles/theme'
-import { useRef, useState } from 'react'
+import CardWrapper from './CardWrapper'
 
-export default function TextCard({ id, question, type }: SurveyCardType) {
+export default function TextCard({ id, question, type, required }: SurveyCardType) {
   const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard, shallowEqual)
   const dispatch = useDispatch()
 
@@ -44,6 +42,7 @@ export default function TextCard({ id, question, type }: SurveyCardType) {
         <View style={styles.readonlyContainer}>
           <View style={styles.readOnlyQuestionContainer}>
             <Text style={styles.readOnlyQuestion}>{question || '질문'}</Text>
+            {required && <Text style={styles.required}>*</Text>}
           </View>
           <View style={[styles.readOnlyAnswerContainer, type === 'short' ? styles.half : null]}>
             <Text style={styles.readOnlyAnswerText}>
@@ -76,7 +75,9 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     paddingHorizontal: 25,
   },
-  readOnlyQuestionContainer: {},
+  readOnlyQuestionContainer: {
+    flexDirection: 'row',
+  },
   readOnlyQuestion: {
     fontSize: 20,
   },
@@ -91,5 +92,9 @@ const styles = StyleSheet.create({
   },
   half: {
     width: '50%',
+  },
+  required: {
+    color: colors.red,
+    fontSize: 18,
   },
 })

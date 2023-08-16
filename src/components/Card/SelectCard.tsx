@@ -10,7 +10,7 @@ import Option from '@components/Option'
 import { colors } from '@styles/theme'
 import CardWrapper from './CardWrapper'
 
-export default function RadioCard({ id, type, question, options }: SurveyCardType) {
+export default function SelectCard({ id, type, question, options, required }: SurveyCardType) {
   const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard, shallowEqual)
   const dispatch = useDispatch()
 
@@ -58,7 +58,10 @@ export default function RadioCard({ id, type, question, options }: SurveyCardTyp
       )}
       {activeCard !== id && (
         <View style={styles.container}>
-          <Text style={styles.readOnlyQuestionText}>{question || '질문'}</Text>
+          <View style={styles.readOnlyQuestionContainer}>
+            <Text style={styles.readOnlyQuestionText}>{question || '질문'}</Text>
+            {required && <Text style={styles.required}>*</Text>}
+          </View>
           <View style={styles.readOnlyOptionsContainer}>
             {options.map((option, index) => (
               <View key={option.id} style={styles.readOnlyOptionContainer}>
@@ -95,6 +98,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     backgroundColor: colors.greyLight,
   },
+  readOnlyQuestionContainer: {
+    flexDirection: 'row',
+  },
   readOnlyQuestionText: {
     fontSize: 20,
   },
@@ -110,5 +116,9 @@ const styles = StyleSheet.create({
   },
   readOnlyOptionText: {
     marginLeft: 10,
+  },
+  required: {
+    color: colors.red,
+    fontSize: 18,
   },
 })
