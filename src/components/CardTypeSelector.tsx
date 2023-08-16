@@ -9,28 +9,27 @@ import { useState } from 'react'
 
 interface Props {
   id: string
+  type: SurveyCardTypeKey
 }
 
-export default function CardTypeSelector({ id }: Props) {
+export default function CardTypeSelector({ id, type }: Props) {
   const dispatch = useDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
-  const [type, setType] = useState('객관식 질문')
+  const [optionType, setOptionType] = useState(type)
 
   const handlePress = () => {
-    const options = ['단답형', '장문형', '객관식 질문', '체크박스', '취소']
-
     showActionSheetWithOptions(
       {
-        options,
+        options: options.map((o) => o.ko).concat(['취소']),
         cancelButtonIndex: 4,
       },
       (i?: number) => {
         if (i === 4) return
 
-        const typeKey = options[i as number]
-        const type = typeMap[typeKey]
+        const option = options[i!]
+        const type = option.type
         dispatch(cardActions.updateCardType({ id, type }))
-        setType(typeKey)
+        setOptionType(type)
       }
     )
   }
@@ -44,17 +43,33 @@ export default function CardTypeSelector({ id }: Props) {
         color={colors.greyDark}
         style={styles.button}
       />
-      <Text style={styles.text}>{type}</Text>
+      <Text style={styles.text}>{options.find((option) => option.type === optionType)?.ko}</Text>
     </View>
   )
 }
 
-const typeMap: Record<string, SurveyCardTypeKey> = {
-  단답형: 'short',
-  장문형: 'long',
-  '객관식 질문': 'radio',
-  체크박스: 'checkbox',
+type Option = {
+  ko: string
+  type: SurveyCardTypeKey
 }
+const options: Option[] = [
+  {
+    ko: '단답형',
+    type: 'short',
+  },
+  {
+    ko: '장문형',
+    type: 'long',
+  },
+  {
+    ko: '객관식 질문',
+    type: 'radio',
+  },
+  {
+    ko: '체크박스',
+    type: 'checkbox',
+  },
+]
 
 const styles = StyleSheet.create({
   container: {
