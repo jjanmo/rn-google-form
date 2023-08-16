@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { colors } from '@styles/theme'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import { RootState } from '@store/root'
 import { useDispatch } from 'react-redux'
 import { cardActions } from '@store/slice/cardSlice'
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function CardWrapper({ children, id, isTitleCard }: PropsWithChildren<Props>) {
-  const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard)
+  const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard, shallowEqual)
   const dispatch = useDispatch()
 
   const handlePress = () => {

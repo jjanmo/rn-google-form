@@ -21,9 +21,7 @@ export interface SurveyCardType extends BaseCard {
 export type CardType = TitleCardType | SurveyCardType
 export interface CardsState {
   activeCard: string
-  data: {
-    [key: string]: CardType
-  }
+  data: CardType[]
 }
 
 // PayloadType

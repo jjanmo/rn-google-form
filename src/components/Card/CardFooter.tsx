@@ -1,12 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Switch, Divider } from '@react-native-material/core'
-import { useDispatch } from 'react-redux'
+import { shallowEqual, useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { RootState } from '@store/root'
 import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { cardActions } from '@store/slice/cardSlice'
 import { colors } from '@styles/theme'
+import { findCardData } from '@store/helper'
 
 interface Props {
   id: string
@@ -14,7 +15,8 @@ interface Props {
 
 export default function CardFooter({ id }: Props) {
   const required = useSelector<RootState, boolean>(
-    (state) => (state.cards.data[id] as SurveyCardType).required
+    (state) => (findCardData(state.cards.data, id).card as SurveyCardType).required,
+    shallowEqual
   )
   const dispatch = useDispatch()
 

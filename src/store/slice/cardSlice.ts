@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import * as Crypto from 'expo-crypto'
+import cloneDeep from 'lodash/cloneDeep'
+import { findCardData, getNextActiveCardId, isSurveyCard } from '@store/helper'
 import {
   BasePayload,
   CardsState,
@@ -14,13 +16,13 @@ import {
 const initialId = Crypto.randomUUID()
 const initialState: CardsState = {
   activeCard: initialId,
-  data: {
-    [initialId]: {
+  data: [
+    {
       id: initialId,
       type: 'title',
       title: '제목 없는 설문지',
     },
-  },
+  ],
 }
 
 const slice = createSlice({
@@ -31,9 +33,10 @@ const slice = createSlice({
       state.activeCard = action.payload.id
     },
     addCard: (state) => {
-      const id = Crypto.randomUUID()
-      state.data[id] = {
-        id,
+      const { index: activeIndex } = findCardData(state.data, state.activeCard)
+      const newId = Crypto.randomUUID()
+      const newCard = {
+        id: newId,
         type: 'radio',
         required: false,
         question: '질문',
@@ -43,18 +46,18 @@ const slice = createSlice({
             text: '옵션 1',
           },
         ],
-      }
-      state.activeCard = id
+      } as SurveyCardType
+      state.data.splice(activeIndex + 1, 0, newCard)
+      state.activeCard = newId
     },
     updateCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
       const { id, type } = action.payload
-      const surveyCard = state.data[id] as SurveyCardType
-
-      const prevType = surveyCard.type
+      const { card: targetCard } = findCardData(state.data, id)
+      const prevType = targetCard.type
       const isChangingSelectTypeToTextType =
         (prevType === 'checkbox' || prevType === 'radio') && (type === 'short' || type === 'long')
       if (isChangingSelectTypeToTextType) {
-        surveyCard.options = [
+        targetCard.options = [
           {
             id: Crypto.randomUUID(),
             text: '옵션 1',
@@ -62,55 +65,59 @@ const slice = createSlice({
         ]
       }
 
-      surveyCard.type = type
+      targetCard.type = type
     },
     editTitleCardText: (state, action: PayloadAction<PayloadWithTitleCard>) => {
-      const { id, title, description } = action.payload
-      const titleCard = state.data[id] as TitleCardType
-      titleCard.title = title
-      titleCard.description = description
+      const { title, description } = action.payload
+      const targetCard = state.data[0] as TitleCardType // 항상 0번(시작)이 TitleCard!, 0번에서 바뀌지않음
+      targetCard.title = title
+      targetCard.description = description
     },
     editSurveyCardQuestion: (state, action: PayloadAction<PayloadWithSurveyCard>) => {
       const { id, question } = action.payload
-      const surveyCard = state.data[id] as SurveyCardType
-      surveyCard.question = question
+      const { card: targetCard } = findCardData(state.data, id)
+      if (isSurveyCard(targetCard)) targetCard.question = question
     },
     editSurveyCardOption: (state, action: PayloadAction<PayloadWithOption>) => {
       const { id, option, index } = action.payload
-      const surveyCard = state.data[id] as SurveyCardType
-      surveyCard.options[index].text = option
+      const { card: targetCard } = findCardData(state.data, id)
+      if (isSurveyCard(targetCard)) targetCard.options[index].text = option
     },
     addOption: (state, action: PayloadAction<BasePayload>) => {
       const { id } = action.payload
-      const options = (state.data[id] as SurveyCardType).options
-      options.push({
-        id: Crypto.randomUUID(),
-        text: `옵션 ${options.length + 1}`,
-      })
+      const { card: targetCard } = findCardData(state.data, id)
+      if (isSurveyCard(targetCard)) {
+        targetCard.options.push({
+          id: Crypto.randomUUID(),
+          text: `옵션 ${targetCard.options.length + 1}`,
+        })
+      }
     },
     deleteOption: (state, action: PayloadAction<PayloadWithOption>) => {
       const { id, index } = action.payload
-      const options = (state.data[id] as SurveyCardType).options
-      options.splice(index, 1)
+      const { card: targetCard } = findCardData(state.data, id)
+      if (isSurveyCard(targetCard)) targetCard.options.splice(index, 1)
     },
     updateRequired: (state, action: PayloadAction<BasePayload>) => {
       const { id } = action.payload
-      const surveyCard = state.data[id] as SurveyCardType
-      surveyCard.required = !surveyCard.required
+      const { card: targetCard } = findCardData(state.data, id)
+      if (isSurveyCard(targetCard)) targetCard.required = !targetCard.required
     },
     copyCard: (state, action: PayloadAction<BasePayload>) => {
       const { id } = action.payload
-      const surveyCard = state.data[id] as SurveyCardType
-      // const copiedCard = cloneDeep(surveyCard)
-      // const newId = Crypto.randomUUID()
-      // copiedCard.id = newId
-      // state.data[newId] = copiedCard
-      // state.activeCard = newId
-      // 수정 예정!!
+      const { index, card } = findCardData(state.data, id)
+      const copiedCard = cloneDeep(card)
+      const newId = Crypto.randomUUID()
+      copiedCard.id = newId
+      state.data.splice(index + 1, 0, copiedCard)
+      state.activeCard = newId
     },
     deleteCard: (state, action: PayloadAction<BasePayload>) => {
       const { id } = action.payload
-      delete state.data[id]
+      const { index: deletedIdx } = findCardData(state.data, id)
+      const nextActiveCardId = getNextActiveCardId(state.data, deletedIdx)
+      state.data.splice(deletedIdx, 1)
+      state.activeCard = nextActiveCardId
     },
   },
 })
