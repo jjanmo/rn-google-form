@@ -1,13 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Switch, Divider } from '@react-native-material/core'
-import { shallowEqual, useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@store/root'
 import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { cardActions } from '@store/slice/cardSlice'
-import { colors } from '@styles/theme'
 import { findCardData } from '@store/helper'
+import { colors } from '@styles/theme'
+import Button from '@components/Button'
 
 interface Props {
   id: string
@@ -44,14 +44,20 @@ export default function CardFooter({ id }: Props) {
             style={styles.switch}
           />
         </View>
-        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handlePressCopy}>
-          <Text style={styles.buttonText}>항목 복제</Text>
-          <MaterialCommunityIcons name="content-copy" size={18} color={colors.greyDark} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handlePressDelete}>
-          <Text>항목 삭제</Text>
-          <MaterialCommunityIcons name="delete-outline" size={22} color={colors.greyDark} />
-        </TouchableOpacity>
+        <Button
+          buttonText="항목 복제"
+          renderIcon={() => (
+            <MaterialCommunityIcons name="content-copy" size={18} color={colors.greyDark} />
+          )}
+          onPress={handlePressCopy}
+        />
+        <Button
+          buttonText="항목 삭제"
+          renderIcon={() => (
+            <MaterialCommunityIcons name="delete-outline" size={22} color={colors.greyDark} />
+          )}
+          onPress={handlePressDelete}
+        />
       </View>
     </>
   )
