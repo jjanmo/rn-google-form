@@ -15,7 +15,7 @@ export default function RadioCard({ id, type, question, options }: SurveyCardTyp
   const dispatch = useDispatch()
 
   const handleChangeQuestion = (text: string) => {
-    dispatch(cardActions.editSurveyCardText({ question: text, id }))
+    dispatch(cardActions.editSurveyCardQuestion({ question: text, id }))
   }
   const handlePressAddOption = () => {
     dispatch(cardActions.addOption({ id }))
@@ -35,7 +35,7 @@ export default function RadioCard({ id, type, question, options }: SurveyCardTyp
             selectionColor={colors.greyDark}
             color={colors.purpleDark}
           />
-          <CardTypeSelector id={id} />
+          <CardTypeSelector id={id} type={type} />
           <View style={styles.optionsContainer}>
             {options.map((option, index, options) => (
               <Option
@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 25,
   },
-  questionInput: {
-    fontSize: 16,
-    fontWeight: '500',
-    backgroundColor: colors.greyLight,
-  },
   questionInputContainer: {
     marginBottom: 10,
+  },
+  questionInput: {
+    fontSize: 20,
+    fontWeight: '500',
+    backgroundColor: colors.greyLight,
   },
   readOnlyQuestionText: {
     fontSize: 20,

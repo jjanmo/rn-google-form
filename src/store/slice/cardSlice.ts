@@ -57,7 +57,7 @@ const slice = createSlice({
       titleCard.title = title
       titleCard.description = description
     },
-    editSurveyCardText: (state, action: PayloadAction<PayloadWithSurveyCard>) => {
+    editSurveyCardQuestion: (state, action: PayloadAction<PayloadWithSurveyCard>) => {
       const { id, question } = action.payload
       const surveyCard = state.data[id] as SurveyCardType
       surveyCard.question = question

@@ -19,7 +19,7 @@ export default function TitleCard({ id, title, description, type }: TitleCardTyp
   }
 
   return (
-    <CardWrapper id={id} type={type}>
+    <CardWrapper id={id} isTitleCard>
       {activeCard === id && (
         <View style={styles.container}>
           <TextInput

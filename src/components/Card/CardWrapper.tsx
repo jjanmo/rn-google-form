@@ -8,10 +8,10 @@ import { cardActions } from '@store/slice/cardSlice'
 
 interface Props {
   id: string
-  type?: 'title'
+  isTitleCard?: boolean
 }
 
-export default function CardWrapper({ children, id, type }: PropsWithChildren<Props>) {
+export default function CardWrapper({ children, id, isTitleCard }: PropsWithChildren<Props>) {
   const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard)
   const dispatch = useDispatch()
 
@@ -21,7 +21,7 @@ export default function CardWrapper({ children, id, type }: PropsWithChildren<Pr
 
   return (
     <TouchableOpacity style={styles.container} activeOpacity={1} onPress={handlePress}>
-      {type === 'title' && <View style={styles.topHighlighting} />}
+      {isTitleCard && <View style={styles.topHighlighting} />}
       {id === activeCard && <View style={styles.leftHighlighting} />}
       {children}
     </TouchableOpacity>
