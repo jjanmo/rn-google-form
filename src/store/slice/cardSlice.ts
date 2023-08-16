@@ -49,6 +49,19 @@ const slice = createSlice({
     updateCardType: (state, action: PayloadAction<PayloadWithTypeKey>) => {
       const { id, type } = action.payload
       const surveyCard = state.data[id] as SurveyCardType
+
+      const prevType = surveyCard.type
+      const isChangingSelectTypeToTextType =
+        (prevType === 'checkbox' || prevType === 'radio') && (type === 'short' || type === 'long')
+      if (isChangingSelectTypeToTextType) {
+        surveyCard.options = [
+          {
+            id: Crypto.randomUUID(),
+            text: '옵션 1',
+          },
+        ]
+      }
+
       surveyCard.type = type
     },
     editTitleCardText: (state, action: PayloadAction<PayloadWithTitleCard>) => {
