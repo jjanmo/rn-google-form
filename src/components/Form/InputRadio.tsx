@@ -3,7 +3,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import { RadioButton } from 'react-native-paper'
 import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { colors } from '@styles/theme'
-import InputWrapper from './InputWrapper'
+import InputQuestion from './common/InputQuestion'
+import InputWrapper from './common/InputWrapper'
 
 export default function InputRadio({ question, options, required }: SurveyCardType) {
   const [value, setValue] = useState<string>('')
@@ -12,11 +13,9 @@ export default function InputRadio({ question, options, required }: SurveyCardTy
 
   return (
     <InputWrapper>
-      <View style={styles.questionContainer}>
-        <Text style={styles.questionText}>{question}</Text>
-        {required && <Text style={styles.required}>*</Text>}
-      </View>
-      <View style={styles.optionsContainer}>
+      <InputQuestion question={question} required={required} />
+
+      <View>
         <RadioButton.Group onValueChange={handleChange} value={value}>
           {options.map((option) => (
             <View key={option.id} style={styles.optionContainer}>
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.red,
   },
-  optionsContainer: {},
   optionContainer: {
     flexDirection: 'row',
     alignItems: 'center',

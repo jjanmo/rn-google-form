@@ -1,9 +1,10 @@
-import { SurveyCardType } from '@store/slice/cardSlice.type'
-import { StyleSheet, Text, View } from 'react-native'
-import InputWrapper from './InputWrapper'
-import { colors } from '@styles/theme'
-import { TextInput } from '@react-native-material/core'
 import { useRef, useState } from 'react'
+import { StyleSheet } from 'react-native'
+import { TextInput } from '@react-native-material/core'
+import { SurveyCardType } from '@store/slice/cardSlice.type'
+import { colors } from '@styles/theme'
+import InputQuestion from './common/InputQuestion'
+import InputWrapper from './common/InputWrapper'
 
 export default function InputTextField({ question, required, type }: SurveyCardType) {
   const isShort = useRef<boolean>(type === 'short')
@@ -15,10 +16,8 @@ export default function InputTextField({ question, required, type }: SurveyCardT
 
   return (
     <InputWrapper>
-      <View style={styles.questionContainer}>
-        <Text style={styles.questionText}>{question}</Text>
-        {required && <Text style={styles.required}>*</Text>}
-      </View>
+      <InputQuestion question={question} required={required} />
+
       <TextInput
         value={value}
         onChangeText={handleChangeAnswer}
@@ -33,17 +32,6 @@ export default function InputTextField({ question, required, type }: SurveyCardT
 }
 
 const styles = StyleSheet.create({
-  questionContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  questionText: {
-    fontSize: 20,
-  },
-  required: {
-    fontSize: 20,
-    color: colors.red,
-  },
   half: {
     width: '50%',
   },

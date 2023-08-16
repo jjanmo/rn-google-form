@@ -1,6 +1,6 @@
-import { colors } from '@styles/theme'
 import { PropsWithChildren } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { colors } from '@styles/theme'
 
 export default function InputWrapper({ children }: PropsWithChildren) {
   return <View style={styles.container}>{children}</View>
