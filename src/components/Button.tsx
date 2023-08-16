@@ -1,8 +1,8 @@
 import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native'
 
 export type ButtonCustomStyles = {
-  button: StyleProp<ViewStyle>
-  buttonText: StyleProp<TextStyle>
+  button?: StyleProp<ViewStyle>
+  buttonText?: StyleProp<TextStyle>
 }
 interface Props {
   buttonText: string
