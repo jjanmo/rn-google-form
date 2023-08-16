@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@store/root'
 import { useDispatch } from 'react-redux'
 import { cardActions } from '@store/slice/cardSlice'
+import CardFooter from './CardFooter'
 
 interface Props {
   id: string
@@ -24,6 +25,7 @@ export default function CardWrapper({ children, id, isTitleCard }: PropsWithChil
       {isTitleCard && <View style={styles.topHighlighting} />}
       {id === activeCard && <View style={styles.leftHighlighting} />}
       {children}
+      {!isTitleCard && id === activeCard && <CardFooter id={id} />}
     </TouchableOpacity>
   )
 }

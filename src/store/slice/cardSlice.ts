@@ -93,6 +93,11 @@ const slice = createSlice({
       const options = (state.data[id] as SurveyCardType).options
       options.splice(index, 1)
     },
+    updateRequired: (state, action: PayloadAction<BasePayload>) => {
+      const { id } = action.payload
+      const surveyCard = state.data[id] as SurveyCardType
+      surveyCard.required = !surveyCard.required
+    },
   },
 })
 
