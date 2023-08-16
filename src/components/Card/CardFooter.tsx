@@ -21,8 +21,12 @@ export default function CardFooter({ id }: Props) {
   const handleChange = () => {
     dispatch(cardActions.updateRequired({ id }))
   }
-  const handlePressCopy = () => {}
-  const handlePressDelete = () => {}
+  const handlePressCopy = () => {
+    dispatch(cardActions.copyCard({ id }))
+  }
+  const handlePressDelete = () => {
+    dispatch(cardActions.deleteCard({ id }))
+  }
 
   return (
     <>

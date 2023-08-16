@@ -98,6 +98,20 @@ const slice = createSlice({
       const surveyCard = state.data[id] as SurveyCardType
       surveyCard.required = !surveyCard.required
     },
+    copyCard: (state, action: PayloadAction<BasePayload>) => {
+      const { id } = action.payload
+      const surveyCard = state.data[id] as SurveyCardType
+      // const copiedCard = cloneDeep(surveyCard)
+      // const newId = Crypto.randomUUID()
+      // copiedCard.id = newId
+      // state.data[newId] = copiedCard
+      // state.activeCard = newId
+      // 수정 예정!!
+    },
+    deleteCard: (state, action: PayloadAction<BasePayload>) => {
+      const { id } = action.payload
+      delete state.data[id]
+    },
   },
 })
 
