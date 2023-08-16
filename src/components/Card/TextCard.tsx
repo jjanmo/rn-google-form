@@ -4,9 +4,9 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@store/root'
 import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { cardActions } from '@store/slice/cardSlice'
-import CardTypeSelector from '@components/CardTypeSelector'
+import CardTypeSelector from '@components/Card/common/CardTypeSelector'
 import { colors } from '@styles/theme'
-import CardWrapper from './CardWrapper'
+import CardWrapper from './common/CardWrapper'
 
 export default function TextCard({ id, question, type, required }: SurveyCardType) {
   const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard, shallowEqual)
@@ -30,7 +30,9 @@ export default function TextCard({ id, question, type, required }: SurveyCardTyp
             selectionColor="grey"
             color={colors.purpleDark}
           />
+
           <CardTypeSelector id={id} type={type} />
+
           <View style={[styles.readOnlyAnswerContainer, type === 'short' ? styles.half : null]}>
             <Text style={styles.readOnlyAnswerText}>
               {type === 'short' ? '단답형 텍스트' : '장문형 텍스트'}
@@ -38,6 +40,7 @@ export default function TextCard({ id, question, type, required }: SurveyCardTyp
           </View>
         </View>
       )}
+
       {activeCard !== id && (
         <View style={styles.readonlyContainer}>
           <View style={styles.readOnlyQuestionContainer}>

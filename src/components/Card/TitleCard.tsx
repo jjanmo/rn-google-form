@@ -4,10 +4,10 @@ import { TextInput, Text } from '@react-native-material/core'
 import { RootState } from '@store/root'
 import { TitleCardType } from '@store/slice/cardSlice.type'
 import { cardActions } from '@store/slice/cardSlice'
-import CardWrapper from './CardWrapper'
+import CardWrapper from './common/CardWrapper'
 import { colors } from '@styles/theme'
 
-export default function TitleCard({ id, title, description, type }: TitleCardType) {
+export default function TitleCard({ id, title, description }: TitleCardType) {
   const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard, shallowEqual)
   const dispatch = useDispatch()
 
@@ -42,6 +42,7 @@ export default function TitleCard({ id, title, description, type }: TitleCardTyp
           />
         </View>
       )}
+
       {activeCard !== id && (
         <View style={styles.readonlyContainer}>
           <View style={styles.readOnlyTitle}>

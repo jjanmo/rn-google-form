@@ -5,10 +5,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { cardActions } from '@store/slice/cardSlice'
 import { RootState } from '@store/root'
-import CardTypeSelector from '@components/CardTypeSelector'
-import Option from '@components/Option'
+import CardTypeSelector from '@components/Card/common/CardTypeSelector'
+import Option from '@components/Card/common/Option'
 import { colors } from '@styles/theme'
-import CardWrapper from './CardWrapper'
+import CardWrapper from './common/CardWrapper'
 
 export default function SelectCard({ id, type, question, options, required }: SurveyCardType) {
   const activeCard = useSelector<RootState, string>((state) => state.cards.activeCard, shallowEqual)
@@ -35,7 +35,9 @@ export default function SelectCard({ id, type, question, options, required }: Su
             selectionColor={colors.greyDark}
             color={colors.purpleDark}
           />
+
           <CardTypeSelector id={id} type={type} />
+
           <View style={styles.optionsContainer}>
             {options.map((option, index, options) => (
               <Option
@@ -56,6 +58,7 @@ export default function SelectCard({ id, type, question, options, required }: Su
           />
         </View>
       )}
+
       {activeCard !== id && (
         <View style={styles.container}>
           <View style={styles.readOnlyQuestionContainer}>
