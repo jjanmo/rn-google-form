@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { colors } from '@styles/theme'
 import { shallowEqual, useSelector } from 'react-redux'
 import { RootState } from '@store/root'
@@ -30,10 +30,12 @@ export default function CardWrapper({ children, id, isTitleCard }: PropsWithChil
   )
 }
 
+const screen = Dimensions.get('screen')
+
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    width: '95%',
+    width: screen.width * 0.95,
     marginBottom: 10,
     backgroundColor: colors.white,
     borderColor: colors.grey,

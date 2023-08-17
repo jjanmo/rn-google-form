@@ -59,7 +59,6 @@ export default function TitleCard({ id, title, description }: TitleCardType) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingVertical: 20,
     paddingHorizontal: 25,
   },
