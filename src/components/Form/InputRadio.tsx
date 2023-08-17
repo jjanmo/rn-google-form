@@ -6,9 +6,13 @@ import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { colors } from '@styles/theme'
 import InputQuestion from './common/InputQuestion'
 import InputWrapper from './common/InputWrapper'
+import ErrorNotice from '@components/ErrorNotice'
 
 export default function InputRadio({ id, question, options, required }: SurveyCardType) {
-  const { control } = useFormContext()
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <InputWrapper>
@@ -21,18 +25,21 @@ export default function InputRadio({ id, question, options, required }: SurveyCa
             required,
           }}
           render={({ field: { onChange, value } }) => (
-            <RadioButton.Group onValueChange={onChange} value={value}>
-              {options.map((option) => (
-                <View key={option.id} style={styles.optionContainer}>
-                  <RadioButton.Android
-                    value={option.id}
-                    color={colors.purpleDark}
-                    uncheckedColor={colors.grey}
-                  />
-                  <Text>{option.text}</Text>
-                </View>
-              ))}
-            </RadioButton.Group>
+            <>
+              <RadioButton.Group onValueChange={onChange} value={value}>
+                {options.map((option) => (
+                  <View key={option.id} style={styles.optionContainer}>
+                    <RadioButton.Android
+                      value={option.id}
+                      color={colors.purpleDark}
+                      uncheckedColor={colors.grey}
+                    />
+                    <Text>{option.text}</Text>
+                  </View>
+                ))}
+              </RadioButton.Group>
+              {errors[id] && <ErrorNotice message={'필수 질문입니다.'} />}
+            </>
           )}
           name={`${id}`}
         />

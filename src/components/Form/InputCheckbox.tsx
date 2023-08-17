@@ -5,9 +5,13 @@ import { SurveyCardType } from '@store/slice/cardSlice.type'
 import { colors } from '@styles/theme'
 import InputQuestion from './common/InputQuestion'
 import InputWrapper from './common/InputWrapper'
+import ErrorNotice from '@components/ErrorNotice'
 
 export default function InputCheckbox({ id, question, options, required }: SurveyCardType) {
-  const { control } = useFormContext()
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <InputWrapper>
@@ -17,21 +21,23 @@ export default function InputCheckbox({ id, question, options, required }: Surve
         {options.map((option, index) => (
           <Controller
             key={option.id}
-            defaultValue={false}
             control={control}
             rules={{
               required,
             }}
             render={({ field: { onChange, value } }) => (
-              <View style={styles.optionContainer}>
-                <Checkbox.Android
-                  style={styles.checkbox}
-                  color={colors.purpleDark}
-                  status={value ? 'checked' : 'unchecked'}
-                  onPress={() => onChange(!value)}
-                />
-                <Text>{option.text}</Text>
-              </View>
+              <>
+                <View style={styles.optionContainer}>
+                  <Checkbox.Android
+                    style={styles.checkbox}
+                    color={colors.purpleDark}
+                    status={value ? 'checked' : 'unchecked'}
+                    onPress={() => onChange(!value)}
+                  />
+                  <Text>{option.text}</Text>
+                </View>
+                {errors[id] && <ErrorNotice message={'필수 질문입니다.'} />}
+              </>
             )}
             name={`${id}[${index}]`}
           />

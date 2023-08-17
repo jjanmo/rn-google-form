@@ -6,8 +6,8 @@ export type ButtonCustomStyles = {
 }
 interface Props {
   buttonText: string
-  renderIcon: () => React.ReactNode
   onPress: () => void
+  renderIcon?: () => React.ReactNode
   styles?: ButtonCustomStyles
 }
 
@@ -19,7 +19,7 @@ export default function Button({ renderIcon, onPress, styles, buttonText }: Prop
       onPress={onPress}
     >
       <Text style={[baseStyles.buttonText, styles?.buttonText]}>{buttonText}</Text>
-      {renderIcon()}
+      {renderIcon?.()}
     </TouchableOpacity>
   )
 }
