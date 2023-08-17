@@ -7,6 +7,7 @@ import Preview from '@screens/Preview'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { StatusBar } from 'expo-status-bar'
 import { colors } from '@styles/theme'
+import Result from '@screens/Result'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -20,21 +21,21 @@ export default function App() {
             initialRouteName="Home"
             screenOptions={{
               tabBarLabelStyle: { fontSize: 14, fontWeight: '600' },
-              tabBarItemStyle: { width: 80 },
+              tabBarItemStyle: { width: 90 },
               tabBarActiveTintColor: colors.purpleDark,
               tabBarInactiveTintColor: colors.black,
               tabBarIndicatorStyle: {
                 backgroundColor: colors.purpleDark,
                 borderRadius: 10,
               },
-              tabBarGap: 10,
+              tabBarGap: 5,
             }}
           >
             <Tab.Screen
               name="Home"
               component={Home}
               options={{
-                title: '질문',
+                title: '설문지생성',
               }}
             />
             <Tab.Screen
@@ -42,6 +43,13 @@ export default function App() {
               component={Preview}
               options={{
                 title: '미리보기',
+              }}
+            />
+            <Tab.Screen
+              name="Result"
+              component={Result}
+              options={{
+                title: '결과보기',
               }}
             />
           </Tab.Navigator>
