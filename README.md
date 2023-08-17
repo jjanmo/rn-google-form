@@ -2,6 +2,8 @@
 
 ## How to start
 
+### Install & Execute
+
 ```
   yarn
 ```
@@ -24,6 +26,20 @@
 
 - 폰에서 직접 실행 : `QR코드`를 찍은 후 `Expo Go` 라는 앱으로 이동 후 실행
   > (※. Expo Go앱이 설치되었어야함)
+
+## How to use dummy data
+
+1. `cardSlice.ts` 파일로 이동합니다.
+
+2. 상단에 주석처리된 부분의 주석을 제거합니다.
+
+3. `dummyState`를 `createSlice` 안의 `initialState`에 할당합니다.
+
+4. 추가적인 더미데이터를 만들고 싶다면, `src > dummy.ts` 파일에서 수정하시면 됩니다.
+
+5. 혹시 새로운 더미데이터를 사용하는 경우, `activeCard`에 설문항목 중 한 개의 `아이디 값을 등록`해줘야 합니다.
+
+6. 더미데이터 없이 테스트를 원하신다면 원래 상태, 즉 `initialState`를 유지한 채로 시작하면 됩니다.
 
 ## Project Structure
 
