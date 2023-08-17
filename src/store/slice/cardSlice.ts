@@ -12,6 +12,12 @@ import {
   SurveyCardType,
   TitleCardType,
 } from './cardSlice.type'
+// import { data } from '../../dummy'
+
+// const dummyState: CardsState = {
+//   activeCard: '3238765b-894d-4829-b12a-c77962ad3d52',
+//   data,
+// }
 
 const initialId = Crypto.randomUUID()
 const initialState: CardsState = {
