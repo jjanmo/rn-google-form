@@ -1,11 +1,11 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import ActionNotice from '@components/ActionNotice'
 import { RootState } from '@store/root'
 import { isSurveyCard } from '@store/helper'
-import { AnswerState, answerActions } from '@store/slice/answerSlice'
-import { SurveyCardType, SurveyCardTypeKey } from '@store/slice/cardSlice.type'
+import { FormData, answerActions } from '@store/slice/answerSlice'
+import { CardType, SurveyCardType, SurveyCardTypeKey } from '@store/slice/cardSlice.type'
 import Button, { ButtonCustomStyles } from '@components/Button'
 import Layout from '@components/Layout'
 import { colors } from '@styles/theme'
@@ -13,10 +13,14 @@ import { colors } from '@styles/theme'
 export default function Result() {
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const answers = useSelector<RootState, AnswerState['data']>((state) => state.answers.data)
-  const prevCards = useSelector<RootState, SurveyCardType[]>((state) => state.answers.prevCards)
+  const answers = useSelector<RootState, FormData>((state) => state.answers.data, shallowEqual)
+  const prevCards = useSelector<RootState, SurveyCardType[]>(
+    (state) => state.answers.prevCards,
+    shallowEqual
+  )
+  const cards = useSelector<RootState, CardType[]>((state) => state.cards.data, shallowEqual)
 
-  if (prevCards.length < 2)
+  if (cards.length < 2)
     return (
       <Layout>
         <ActionNotice

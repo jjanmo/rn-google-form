@@ -15,9 +15,6 @@ export default function Home() {
   const cards = useSelector<RootState, CardType[]>((state) => state.cards.data, shallowEqual)
   const activeCard = useSelector<RootState, any>((state) => state.cards.activeCard, shallowEqual)
 
-  // TODO : 제출시 LOG 삭제!
-  console.log(cards, cards.length, activeCard)
-
   const dispatch = useDispatch()
   const handlePressAdd = () => {
     dispatch(cardActions.addCard())
