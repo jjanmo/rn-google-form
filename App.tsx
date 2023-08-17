@@ -49,7 +49,7 @@ export default function App() {
               name="Result"
               component={Result}
               options={{
-                title: '결과보기',
+                title: '응답보기',
               }}
             />
           </Tab.Navigator>

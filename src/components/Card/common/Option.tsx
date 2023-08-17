@@ -28,9 +28,9 @@ export default function Option({ type, id, index, optionText, length }: Props) {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         {type === 'checkbox' ? (
-          <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color={colors.greyDark} />
+          <MaterialCommunityIcons name="checkbox-blank-outline" size={20} color={colors.greyDark} />
         ) : (
-          <MaterialCommunityIcons name="radiobox-blank" size={24} color={colors.greyDark} />
+          <MaterialCommunityIcons name="radiobox-blank" size={20} color={colors.greyDark} />
         )}
 
         <TextInput
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   questionInput: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 4,
     fontSize: 16,
     fontWeight: '500',
   },

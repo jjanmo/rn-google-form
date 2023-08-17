@@ -30,23 +30,31 @@ export const data: CardType[] = [
   {
     id: 'a019dee0-1759-4d07-94ac-1b6c3f97df85',
     type: 'checkbox',
-    question: '6.25 당시 우리나라를 도와준 나라는?',
+    question: '개발자로서 당신은??',
     options: [
       {
         id: '0f6e807a-1da4-45df-aa82-36725f246ded',
-        text: '일본',
+        text: '재치 있게 말을 잘하고 유머러스한 편이에요.',
       },
       {
         id: '28a332e4-d505-4d31-a5e5-58d620b7e371',
-        text: '영구',
+        text: '다른 이를 행복하게 해주고 싶은 욕구가 있어요.',
       },
       {
         id: '0cd158eb-19a1-423a-8777-0c20e1b68b82',
-        text: '미국',
+        text: '타인과 조화롭게 살고 싶은 욕구가 있어요.',
       },
       {
-        id: '4960f729-0727-45a6-b618-3f4eb1ac53a2',
-        text: '프랑스',
+        id: '947d335e-eec0-4a1a-a762-d04cc4859bfd',
+        text: '자신만의 강한 신념을 가지고 있어요.',
+      },
+      {
+        id: 'a1e37b1c-022b-4a74-a563-4ef3e881e6a9',
+        text: '모든 사람을 편견없이 수용할 수 있어요.',
+      },
+      {
+        id: 'dd7660c8-d84e-41c9-8e98-7c87ddcd2024',
+        text: '너그럽고 온화한 편이에요.',
       },
     ],
     required: false,
@@ -61,7 +69,7 @@ export const data: CardType[] = [
   {
     id: '3238765b-894d-4829-b12a-c77962ad3d52',
     type: 'long',
-    question: '오늘 중요한 일이 무엇이 있을까요',
+    question: '오늘은 어떠한 버그를 수정했나요',
     options: [],
     required: false,
   },

@@ -71,11 +71,11 @@ export default function SelectCard({ id, type, question, options, required }: Su
                 {type === 'checkbox' ? (
                   <MaterialCommunityIcons
                     name="checkbox-blank-outline"
-                    size={24}
+                    size={20}
                     color={colors.greyDark}
                   />
                 ) : (
-                  <MaterialCommunityIcons name="radiobox-blank" size={24} color={colors.greyDark} />
+                  <MaterialCommunityIcons name="radiobox-blank" size={20} color={colors.greyDark} />
                 )}
                 <Text style={styles.readOnlyOptionText}>{option.text || `옵션 ${index}`}</Text>
               </View>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 20,
-    paddingHorizontal: 25,
+    paddingHorizontal: 30,
   },
   questionInputContainer: {
     marginBottom: 10,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   readOnlyOptionText: {
-    marginLeft: 10,
+    marginLeft: 6,
   },
   required: {
     color: colors.red,
