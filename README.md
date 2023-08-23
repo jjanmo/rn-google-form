@@ -71,7 +71,7 @@ src
 - 설문 항목 CRUD
 
   - 설문 항목 추가/삭제 : `active card(현재 포커싱된 카드)` 기준으로 추가/삭제가 이루어집니다.
-  - 설문 항목의 CRUD는 모두 mutable한 방식으로 이루어지는데, 이는 RTK(redux toolkit) 내부적으로 immmer를 사용하기 때문에 가능합니다. 그래서 코드 작성시 직관적이고 편리한 mutable한 코드를 사용하였습니다. (`cardSlice.ts` 파일)
+  - 설문 항목의 CRUD는 모두 mutable한 방식으로 이루어지는데, 이는 RTK(redux toolkit) 내부적으로 immer를 사용하기 때문에 가능합니다. 그래서 코드 작성시 직관적이고 편리한 mutable한 코드를 사용하였습니다. (`cardSlice.ts` 파일)
 
 - 미리보기 스크린
 
